@@ -1,0 +1,33 @@
+= Zliby:  Pure Ruby Zlib 
+=== Version Information
+Release:: 0.0.1
+Description:: A Ruby 1.8.6 Zlib compatible module.
+Reference:: Zlib[http://www.zlib.net] 1.2.3
+
+== Introduction
+
+Zliby is an implmention of the Zlib[http://www.zlib.net] library written in 
+pure Ruby.  It is meant to be API compatible with the existing Ruby Zlib 
+extension library. The purpose of this library was two-fold:
+
+1. To see if it could be done
+2. To provide IronRuby[http://www.ironruby.net] with a compatible Zlib 
+   implementation
+
+While IronRuby[http://www.ironruby.net] was the inspirition for this project,
+the fact that it's written in pure Ruby means any Ruby implementation should
+benefit. 
+
+=== Acknowledgements
+
+As it stands Zliby is essentially a port of the reference Zlib[http://www.zlib.net]
+implementation by Jean-loup Gailly and Mark Adler.  All due praise should be 
+directed their way.
+
+==== Author
+
+Author:: Michael Letterle [ theprokrammer [ a t ] prokrams.com ]
+Copyright:: 2008 by Michael Letterle
+
+== License
+:include: LICENSE
