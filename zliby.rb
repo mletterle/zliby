@@ -262,7 +262,7 @@ class Inflate < ZStream
 		dynamic_length_codes = Zlib::Inflate::HuffmanTree.new
 		dynamic_distance_codes = Zlib::Inflate::HuffmanTree.new
 		
-		if (nlen > Zlib::ZStream::MAXLCODES || ndist > Zlib::ZStream::MAXDCODES) then raise Zlib::DataError.new("too many length or distance codes") end
+		if (nlen > MAXLCODES || ndist > MAXDCODES) then raise Zlib::DataError.new("too many length or distance codes") end
 		idx = 0
 		
 		while idx < ncode
@@ -393,7 +393,7 @@ class Inflate < ZStream
 		offs = []
 		
 		
-		for len in (000..Zlib::ZStream::MAXBITS)
+		for len in (000..MAXBITS)
 			huffman_tree.count[len] = 0
 		end
 
@@ -405,7 +405,7 @@ class Inflate < ZStream
 		if huffman_tree.count[0] == n_symbols then return 0 end
 		
 		left = 1
-		for len in (1..Zlib::ZStream::MAXBITS)
+		for len in (1..MAXBITS)
 			left <<= 1
 			left -= huffman_tree.count[len];
 			if left < 0 then return left end
@@ -413,7 +413,7 @@ class Inflate < ZStream
 		
 		offs[1] = 0
 		
-		for len in (1..(Zlib::ZStream::MAXBITS-1))
+		for len in (1..(MAXBITS-1))
 			offs[len+1] = offs[len] + huffman_tree.count[len]
 		end
 		
