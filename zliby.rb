@@ -23,13 +23,23 @@ end
 class GZipReader < GZipFile
 	
 	def initialize io
-
+		@io = io
 	end
 	
 	def read
 	end
 	
 	def close
+	end
+	
+	class << self
+
+		def open filename
+			io = File.open filename
+			gz = self.new io
+			yield gz
+		end
+
 	end
 end
 
