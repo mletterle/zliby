@@ -13,17 +13,23 @@ Z_DEFLATED = 8
 
 
 
-class GZipFile
+class GzipFile
 	
 	def close
+	end
+	
+	class Error < Exception
 	end
 
 end
 
-class GZipReader < GZipFile
+class GzipReader < GzipFile
 	
 	def initialize io
 		@io = io
+		@input_buffer = []
+		io.read.each_byte {|b| @input_buffer << b}
+		if @input_buffer[0] != 0x1f || @input_buffer != 0x8b then raise Zlib::GzipFile::Error.new("not in gzip format") end
 	end
 	
 	def read
@@ -35,9 +41,14 @@ class GZipReader < GZipFile
 	class << self
 
 		def open filename
+			begin
 			io = File.open filename
 			gz = self.new io
 			yield gz
+		rescue Exception => e
+			puts e.class.to_s + ": " + e.message
+			puts e.backtrace.join("\n")
+		end
 		end
 
 	end

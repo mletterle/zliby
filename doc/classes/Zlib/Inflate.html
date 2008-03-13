@@ -89,9 +89,9 @@ compatible stream.
 
   <div class="sectiontitle">Methods</div>
   <ul>
-  <li><a href="#M000025">finish</a></li>
-  <li><a href="#M000024">inflate</a></li>
-  <li><a href="#M000023">new</a></li>
+  <li><a href="#M000026">finish</a></li>
+  <li><a href="#M000025">inflate</a></li>
+  <li><a href="#M000024">new</a></li>
   </ul>
 
 
@@ -105,13 +105,13 @@ compatible stream.
 <div class="sectiontitle">Public Class methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000023"></a><b>new</b>(window_bits=MAX_WBITS)
+    <a name="M000024"></a><b>new</b>(window_bits=MAX_WBITS)
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show source</a> ]</p>
-  <div id="M000023_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
+  <div id="M000024_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 163</span>
+<span class="ruby-comment cmt"># File zliby.rb, line 172</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">window_bits</span>=<span class="ruby-constant">MAX_WBITS</span>
                 <span class="ruby-ivar">@w_bits</span> = <span class="ruby-identifier">window_bits</span> 
                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@w_bits</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> 
@@ -127,7 +127,7 @@ compatible stream.
 <div class="sectiontitle">Public Instance methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000025"></a><b>finish</b>()
+    <a name="M000026"></a><b>finish</b>()
   </div>
   <div class="description">
   <p>
@@ -135,10 +135,10 @@ Finishes inflating and flushes the buffer
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
-  <div id="M000025_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show source</a> ]</p>
+  <div id="M000026_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 222</span>
+<span class="ruby-comment cmt"># File zliby.rb, line 231</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>
                 <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
                 <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> }
@@ -151,7 +151,7 @@ Finishes inflating and flushes the buffer
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000024"></a><b>inflate</b>(zstring)
+    <a name="M000025"></a><b>inflate</b>(zstring)
   </div>
   <div class="description">
   <h2>Example</h2>
@@ -162,10 +162,10 @@ Finishes inflating and flushes the buffer
 </pre>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
-  <div id="M000024_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
+  <div id="M000025_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 176</span>
+<span class="ruby-comment cmt"># File zliby.rb, line 185</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inflate</span> <span class="ruby-identifier">zstring</span>
                 
                 <span class="ruby-comment cmt">#We can't use unpack, IronRuby doesn't have it yet.</span>
