@@ -29,7 +29,21 @@ class GzipFile
 end
 
 class GzipReader < GzipFile
-	
+	OSES = ['FAT filesystem', 
+			'Amiga', 
+			'VMS (or OpenVMS)', 
+			'Unix', 
+			'VM/CMS', 
+			'Atari TOS', 
+			'HPFS fileystem (OS/2, NT)', 
+			'Macintosh', 
+			'Z-System',
+			'CP/M',
+			'TOPS-20',
+			'NTFS filesystem (NT)',
+			'QDOS',
+			'Acorn RISCOS',
+			'unknown']
 	def initialize io
 		super()
 		@io = io
@@ -42,6 +56,32 @@ class GzipReader < GzipFile
 		@fextra = flg.isbitset? 2
 		@fname = flg.isbitset? 3
 		@fcomment = flg.isbitset? 4
+		@mtime = Time.at(@input_buffer[@in_pos+=1] | (@input_buffer[@in_pos+=1] << 8) | (@input_buffer[@in_pos+=1] << 16) | (@input_buffer[@in_pos+=1] << 24))
+		@xfl = @input_buffer[@in_pos+=1]
+		@os = OSES[@input_buffer[@in_pos+=1]]
+		if @fextra then 
+			@xlen = (@input_buffer[@in_pos+=1] | (@input_buffer[@in_pos+=1] << 8)) 
+			@xtra_field = []
+			@xlen.times {@xtra_field << @input_buffer[@in_pos+=1]}
+		end
+		if @fname then
+			@original_name = ""
+			until @original_name["\0"].nil? == false
+				@original_name.concat(@input_buffer[@in_pos+=1])
+			end
+			@original_name.chop!
+		end
+		if @fcomment then
+			@comment = ""
+			until @comment["\0"].nil? == false
+				@comment.concat(@input_buffer[@in_pos+=1])
+			end
+			@comment.chop!
+		end
+		if @fhcrc then
+			@header_crc = 0
+		end	
+		
 	end
 	
 	def read
