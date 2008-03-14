@@ -11,9 +11,14 @@ MAX_WBITS = 15
 Z_DEFLATED = 8 
 
 
-
-
 class GzipFile
+	
+	def initialize
+		@input_buffer = []
+		@output_buffer = []
+		@out_pos = -1
+		@in_pos = -1
+	end
 	
 	def close
 	end
@@ -26,10 +31,17 @@ end
 class GzipReader < GzipFile
 	
 	def initialize io
+		super()
 		@io = io
-		@input_buffer = []
 		io.read.each_byte {|b| @input_buffer << b}
-		if @input_buffer[0] != 0x1f || @input_buffer != 0x8b then raise Zlib::GzipFile::Error.new("not in gzip format") end
+		if @input_buffer[@in_pos+=1] != 0x1f || @input_buffer[@in_pos+=1] != 0x8b then raise Zlib::GzipFile::Error.new("not in gzip format") end
+		if @input_buffer[@in_pos+=1] != 0x08 then raise Zlib::GzipFile::Error.new("unknown compression method") end
+		flg = @input_buffer[@in_pos+=1]
+		@ftext = flg.isbitset? 0
+		@fhcrc = flg.isbitset? 1
+		@fextra = flg.isbitset? 2
+		@fname = flg.isbitset? 3
+		@fcomment = flg.isbitset? 4
 	end
 	
 	def read
@@ -37,20 +49,16 @@ class GzipReader < GzipFile
 	
 	def close
 	end
+
 	
 	class << self
 
 		def open filename
-			begin
 			io = File.open filename
 			gz = self.new io
-			yield gz
-		rescue Exception => e
-			puts e.class.to_s + ": " + e.message
-			puts e.backtrace.join("\n")
+			if block_given? then yield gz else gz end
 		end
-		end
-
+		
 	end
 end
 
@@ -470,4 +478,11 @@ end
 class DataError < Error
 end
 
+end
+
+#Add a helper method to check bits
+class Fixnum
+	def isbitset? bit_to_check
+		if self & (2 ** bit_to_check)  == (2 ** bit_to_check) then true else false end
+	end
 end
