@@ -1,0 +1,106 @@
+8
+
+dir
+3
+svn+ssh://mletterle@rubyforge.org/var/svn/zliby/trunk/doc
+svn+ssh://mletterle@rubyforge.org/var/svn/zliby
+
+
+
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0b6f053c-499f-4317-8076-a2c858260318
+
+fr_file_index.html
+file
+
+
+
+
+2008-03-12T01:18:01.093750Z
+548852ede497125ae6957ca56cf805c6
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+fr_method_index.html
+file
+5
+
+
+
+2008-03-12T01:18:01.109375Z
+a3090e1d9df6e3664d364eb4085a3a82
+2008-03-13T02:25:04.625659Z
+5
+mletterle
+
+files
+dir
+
+created.rid
+file
+5
+
+
+
+2008-03-12T01:18:01.125000Z
+a4994e06d4edc0791caa1c6a06afc32c
+2008-03-13T02:25:04.625659Z
+5
+mletterle
+
+fr_class_index.html
+file
+
+
+
+
+2008-03-12T01:18:01.109375Z
+791aae64012871bd68d533f0318fe3c6
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+index.html
+file
+
+
+
+
+2008-03-12T01:18:01.125000Z
+6e5eb16718efc0b87767838c155c5ae1
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+rdoc-style.css
+file
+
+
+
+
+2008-03-12T01:18:00.812500Z
+d888cedfb29e9ee839a2f2aa2f2bc8c1
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+classes
+dir
+

@@ -1,0 +1,52 @@
+8
+
+dir
+3
+svn+ssh://mletterle@rubyforge.org/var/svn/zliby/trunk/doc/files
+svn+ssh://mletterle@rubyforge.org/var/svn/zliby
+
+
+
+2008-03-11T18:18:22.702802Z
+2
+mletterle
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0b6f053c-499f-4317-8076-a2c858260318
+
+zliby_rb.html
+file
+5
+
+
+
+2008-03-12T01:18:00.921875Z
+fe7a426da9d8ec61507256d72bc4cec6
+2008-03-13T02:25:04.625659Z
+5
+mletterle
+
+README.html
+file
+5
+
+
+
+2008-03-12T01:18:00.906250Z
+451bb1d225763113393f0bdf68078503
+2008-03-13T02:25:04.625659Z
+5
+mletterle
+
