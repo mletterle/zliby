@@ -79,12 +79,18 @@ class GzipReader < GzipFile
 			@comment.chop!
 		end
 		if @fhcrc then
-			@header_crc = 0
+			@header_crc = @input_buffer[@in_pos+=1] | (@input_buffer[@in_pos+=1] << 8)
 		end	
-		
+		@contents = ""
+		until @in_pos == @input_buffer.length-1
+			@contents.concat(@input_buffer[@in_pos+=1])
+		end
+		 
 	end
 	
 	def read
+		z = Zlib::Inflate.new -MAX_WBITS
+		z.inflate @contents
 	end
 	
 	def close
@@ -503,6 +509,13 @@ class HuffmanTree
 		@symbol = []
 	end
 end
+
+	class << self
+		def inflate zstring
+			d = self.new
+			d.inflate zstring
+		end
+	end
 
 end
 
