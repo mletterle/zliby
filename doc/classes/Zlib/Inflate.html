@@ -57,7 +57,7 @@
       <tr valign="top">
         <td>In:</td>
         <td>
-<a href="../../files/zliby_rb.html">zliby.rb</a>
+<a href="../../files/lib/zliby_rb.html">lib/zliby.rb</a>
         </td>
       </tr>
     <tr>
@@ -89,9 +89,9 @@ compatible stream.
 
   <div class="sectiontitle">Methods</div>
   <ul>
-  <li><a href="#M000026">finish</a></li>
-  <li><a href="#M000025">inflate</a></li>
-  <li><a href="#M000024">new</a></li>
+  <li><a href="#M000027">finish</a></li>
+  <li><a href="#M000026">inflate</a></li>
+  <li><a href="#M000025">new</a></li>
   </ul>
 
 
@@ -105,13 +105,13 @@ compatible stream.
 <div class="sectiontitle">Public Class methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000024"></a><b>new</b>(window_bits=MAX_WBITS)
+    <a name="M000025"></a><b>new</b>(window_bits=MAX_WBITS)
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
-  <div id="M000024_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
+  <div id="M000025_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 172</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 139</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">window_bits</span>=<span class="ruby-constant">MAX_WBITS</span>
                 <span class="ruby-ivar">@w_bits</span> = <span class="ruby-identifier">window_bits</span> 
                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@w_bits</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> 
@@ -127,7 +127,7 @@ compatible stream.
 <div class="sectiontitle">Public Instance methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000026"></a><b>finish</b>()
+    <a name="M000027"></a><b>finish</b>()
   </div>
   <div class="description">
   <p>
@@ -135,10 +135,10 @@ Finishes inflating and flushes the buffer
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show source</a> ]</p>
-  <div id="M000026_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000027_source')" id="l_M000027_source">show source</a> ]</p>
+  <div id="M000027_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 231</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 198</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>
                 <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
                 <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> }
@@ -151,7 +151,7 @@ Finishes inflating and flushes the buffer
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000025"></a><b>inflate</b>(zstring)
+    <a name="M000026"></a><b>inflate</b>(zstring)
   </div>
   <div class="description">
   <h2>Example</h2>
@@ -162,13 +162,13 @@ Finishes inflating and flushes the buffer
 </pre>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
-  <div id="M000025_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show source</a> ]</p>
+  <div id="M000026_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File zliby.rb, line 185</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 152</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inflate</span> <span class="ruby-identifier">zstring</span>
                 
-                <span class="ruby-comment cmt">#We can't use unpack, IronRuby doesn't have it yet.</span>
+                <span class="ruby-comment cmt">#We can't use unpack, IronRuby doesn't have it yet.</span>
                 <span class="ruby-identifier">zstring</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>}
                 
                <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rawdeflate</span> <span class="ruby-keyword kw">then</span>
@@ -176,15 +176,15 @@ Finishes inflating and flushes the buffer
                 <span class="ruby-identifier">compression_method_and_flags</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]
                 <span class="ruby-identifier">flags</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]
                 
-                <span class="ruby-comment cmt">#CMF and FLG, when viewed as a 16-bit unsigned integer stored inMSB order (CMF*256 + FLG), is a multiple of 31</span>
+                <span class="ruby-comment cmt">#CMF and FLG, when viewed as a 16-bit unsigned integer stored inMSB order (CMF*256 + FLG), is a multiple of 31</span>
                 <span class="ruby-keyword kw">if</span> ((<span class="ruby-identifier">compression_method_and_flags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">0x08</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">flags</span>) <span class="ruby-operator">%</span> <span class="ruby-value">31</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">DataError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;incorrect header check&quot;</span>) <span class="ruby-keyword kw">end</span>
                 
-                <span class="ruby-comment cmt">#CM = 8 denotes the “deflate” compression method with a window size up to 32K. (RFC's only specify CM 8)</span>
+                <span class="ruby-comment cmt">#CM = 8 denotes the “deflate” compression method with a window size up to 32K. (RFC's only specify CM 8)</span>
                 <span class="ruby-identifier">compression_method</span> = <span class="ruby-identifier">compression_method_and_flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x0</span><span class="ruby-constant">F</span> 
                 
                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">compression_method</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">Z_DEFLATED</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">DataError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;unknown compression method&quot;</span>) <span class="ruby-keyword kw">end</span>
                 
-                <span class="ruby-comment cmt">#For CM = 8, CINFO is the base-2 logarithm of the LZ77 window size,minus eight (CINFO=7 indicates a 32K window size)</span>
+                <span class="ruby-comment cmt">#For CM = 8, CINFO is the base-2 logarithm of the LZ77 window size,minus eight (CINFO=7 indicates a 32K window size)</span>
                 <span class="ruby-identifier">compression_info</span> = <span class="ruby-identifier">compression_method_and_flags</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">0x04</span> 
                 
                 <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">compression_info</span> <span class="ruby-operator">+</span> <span class="ruby-value">8</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@w_bits</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">DataError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;invalid window size&quot;</span>) <span class="ruby-keyword kw">end</span>
@@ -192,12 +192,12 @@ Finishes inflating and flushes the buffer
                 <span class="ruby-identifier">preset_dictionary_flag</span> = ((<span class="ruby-identifier">flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x20</span>) <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">0x05</span>) <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
                 <span class="ruby-identifier">compression_level</span> = (<span class="ruby-identifier">flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x</span><span class="ruby-constant">C0</span>) <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">0x06</span>
                 
-                <span class="ruby-comment cmt">#TODO:  Add Preset dictionary support</span>
+                <span class="ruby-comment cmt">#TODO:  Add Preset dictionary support</span>
                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset_dictionary_flag</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@in_pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">4</span> <span class="ruby-keyword kw">end</span>
                 
                 <span class="ruby-keyword kw">end</span>
                 <span class="ruby-identifier">last_block</span> = <span class="ruby-keyword kw">false</span>
-                <span class="ruby-comment cmt">#Begin processing DEFLATE stream</span>
+                <span class="ruby-comment cmt">#Begin processing DEFLATE stream</span>
                 <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">last_block</span>
                         <span class="ruby-identifier">last_block</span> = (<span class="ruby-identifier">get_bits</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">1</span>)
                         <span class="ruby-identifier">block_type</span> = <span class="ruby-identifier">get_bits</span>(<span class="ruby-value">2</span>)
