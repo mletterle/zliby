@@ -89,6 +89,7 @@ class GzipReader < GzipFile
 	end
 	
 	def read
+		#we do raw deflate, no headers
 		z = Zlib::Inflate.new -MAX_WBITS
 		z.inflate @contents
 	end
