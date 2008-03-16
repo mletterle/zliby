@@ -20,7 +20,7 @@ benefit.
 
 === Acknowledgements
 
-As it stands Zliby is essentially a port of the reference Zlib[http://www.zlib.net]
+The deflate implmentation is essentially a port of puff.c from the Zlib[http://www.zlib.net]
 implementation by Jean-loup Gailly and Mark Adler.  All due praise should be 
 directed their way.
 
