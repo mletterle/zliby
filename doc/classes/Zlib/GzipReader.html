@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: Zlib::GzipReader</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />Zlib::GzipReader</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/zliby_rb.html">lib/zliby.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+        <a href="GzipFile.html">
+GzipFile
+         </a>
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000023">close</a></li>
+  <li><a href="#M000021">new</a></li>
+  <li><a href="#M000024">open</a></li>
+  <li><a href="#M000022">read</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class <a href="GzipReader/DataError.html" class="link">Zlib::GzipReader::DataError</a><br />
+Class <a href="GzipReader/Error.html" class="link">Zlib::GzipReader::Error</a><br />
+Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict</a><br />
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">OSES</td>
+    <td>=</td>
+    <td class="attr-value">['FAT filesystem',                          'Amiga',                          'VMS (or OpenVMS)',                          'Unix',                          'VM/CMS',                          'Atari TOS',                          'HPFS fileystem (OS/2, NT)',                          'Macintosh',                          'Z-System',                         'CP/M',                         'TOPS-20',                         'NTFS filesystem (NT)',                         'QDOS',                         'Acorn RISCOS',                         'unknown']</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000021"></a><b>new</b>(io)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show source</a> ]</p>
+  <div id="M000021_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 458</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">io</span>
+                <span class="ruby-keyword kw">super</span>()
+                <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">io</span>
+                <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>}
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">0x1f</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">0x8b</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">GzipFile</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;not in gzip format&quot;</span>) <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">0x08</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">GzipFile</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;unknown compression method&quot;</span>) <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">flg</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]
+                <span class="ruby-ivar">@ftext</span> = <span class="ruby-identifier">flg</span>.<span class="ruby-identifier">isbitset?</span> <span class="ruby-value">0</span>
+                <span class="ruby-ivar">@fhcrc</span> = <span class="ruby-identifier">flg</span>.<span class="ruby-identifier">isbitset?</span> <span class="ruby-value">1</span>
+                <span class="ruby-ivar">@fextra</span> = <span class="ruby-identifier">flg</span>.<span class="ruby-identifier">isbitset?</span> <span class="ruby-value">2</span>
+                <span class="ruby-ivar">@fname</span> = <span class="ruby-identifier">flg</span>.<span class="ruby-identifier">isbitset?</span> <span class="ruby-value">3</span>
+                <span class="ruby-ivar">@fcomment</span> = <span class="ruby-identifier">flg</span>.<span class="ruby-identifier">isbitset?</span> <span class="ruby-value">4</span>
+                <span class="ruby-ivar">@mtime</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">|</span> (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>) <span class="ruby-operator">|</span> (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">16</span>) <span class="ruby-operator">|</span> (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">24</span>))
+                <span class="ruby-ivar">@xfl</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]
+                <span class="ruby-ivar">@os</span> = <span class="ruby-constant">OSES</span>[<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]]
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fextra</span> <span class="ruby-keyword kw">then</span> 
+                        <span class="ruby-ivar">@xlen</span> = (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">|</span> (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>)) 
+                        <span class="ruby-ivar">@xtra_field</span> = []
+                        <span class="ruby-ivar">@xlen</span>.<span class="ruby-identifier">times</span> {<span class="ruby-ivar">@xtra_field</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]}
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fname</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-ivar">@original_name</span> = <span class="ruby-value str">&quot;&quot;</span>
+                        <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@original_name</span>[<span class="ruby-value str">&quot;\0&quot;</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+                                <span class="ruby-ivar">@original_name</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>])
+                        <span class="ruby-keyword kw">end</span>
+                        <span class="ruby-ivar">@original_name</span>.<span class="ruby-identifier">chop!</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fcomment</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-ivar">@comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+                        <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@comment</span>[<span class="ruby-value str">&quot;\0&quot;</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+                                <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>])
+                        <span class="ruby-keyword kw">end</span>
+                        <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">chop!</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fhcrc</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-ivar">@header_crc</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">|</span> (<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>)
+                <span class="ruby-keyword kw">end</span>   
+                <span class="ruby-ivar">@contents</span> = <span class="ruby-value str">&quot;&quot;</span>
+                <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@in_pos</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+                        <span class="ruby-ivar">@contents</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>])
+                <span class="ruby-keyword kw">end</span>
+                 
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000024"></a><b>open</b>(filename) {|gz else gz end| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
+  <div id="M000024_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 513</span>
+                <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>
+                        <span class="ruby-identifier">io</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>
+                        <span class="ruby-identifier">gz</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">io</span>
+                        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">gz</span> <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">gz</span> <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+                
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000023"></a><b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show source</a> ]</p>
+  <div id="M000023_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 508</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000022"></a><b>read</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show source</a> ]</p>
+  <div id="M000022_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 502</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
+                <span class="ruby-comment cmt">#we do raw deflate, no headers</span>
+                <span class="ruby-identifier">z</span> = <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflate</span>.<span class="ruby-identifier">new</span> <span class="ruby-operator">-</span><span class="ruby-constant">MAX_WBITS</span>
+                <span class="ruby-identifier">z</span>.<span class="ruby-identifier">inflate</span> <span class="ruby-ivar">@contents</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>
