@@ -1,6 +1,6 @@
 = Zliby:  Pure Ruby Zlib 
 === Version Information
-Release:: 0.0.1
+Release:: 0.0.2
 Description:: A Ruby 1.8.6 Zlib compatible module.
 Reference:: Zlib[http://www.zlib.net] 1.2.3
 

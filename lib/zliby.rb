@@ -1,5 +1,5 @@
 module Zlib
-ZLIBY_VERSION = "0.0.1"
+ZLIBY_VERSION = "0.0.2"
 ZLIB_VERSION = "1.2.3"	
 VERSION = "0.6.0" #For compatibility with Ruby-core Zlib
 MAXBITS = 15
