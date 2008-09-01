@@ -89,9 +89,11 @@ compatible stream.
 
   <div class="sectiontitle">Methods</div>
   <ul>
-  <li><a href="#M000027">finish</a></li>
-  <li><a href="#M000026">inflate</a></li>
-  <li><a href="#M000025">new</a></li>
+  <li><a href="#M000032">&lt;&lt;</a></li>
+  <li><a href="#M000035">finish</a></li>
+  <li><a href="#M000034">inflate</a></li>
+  <li><a href="#M000031">new</a></li>
+  <li><a href="#M000033">set_dictionary</a></li>
   </ul>
 
 
@@ -105,13 +107,13 @@ compatible stream.
 <div class="sectiontitle">Public Class methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000025"></a><b>new</b>(window_bits=MAX_WBITS)
+    <a name="M000031"></a><b>new</b>(window_bits=MAX_WBITS)
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
-  <div id="M000025_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000031_source')" id="l_M000031_source">show source</a> ]</p>
+  <div id="M000031_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 139</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 189</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">window_bits</span>=<span class="ruby-constant">MAX_WBITS</span>
                 <span class="ruby-ivar">@w_bits</span> = <span class="ruby-identifier">window_bits</span> 
                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@w_bits</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> 
@@ -119,6 +121,7 @@ compatible stream.
                         <span class="ruby-ivar">@w_bits</span> <span class="ruby-operator">*=</span> <span class="ruby-value">-1</span> 
                 <span class="ruby-keyword kw">end</span>   
                 <span class="ruby-keyword kw">super</span>()
+                <span class="ruby-ivar">@zstring</span> = <span class="ruby-value str">&quot;&quot;</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
@@ -127,7 +130,29 @@ compatible stream.
 <div class="sectiontitle">Public Instance methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000027"></a><b>finish</b>()
+    <a name="M000032"></a><b>&lt;&lt;</b>(string)
+  </div>
+  <div class="description">
+  <p>
+Appends data to the input stream
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000032_source')" id="l_M000032_source">show source</a> ]</p>
+  <div id="M000032_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 200</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-identifier">string</span>)
+                <span class="ruby-ivar">@zstring</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">string</span>
+                <span class="ruby-identifier">inflate</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000035"></a><b>finish</b>()
   </div>
   <div class="description">
   <p>
@@ -135,13 +160,14 @@ Finishes inflating and flushes the buffer
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000027_source')" id="l_M000027_source">show source</a> ]</p>
-  <div id="M000027_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000035_source')" id="l_M000035_source">show source</a> ]</p>
+  <div id="M000035_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 198</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 265</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>
                 <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
-                <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> }
+                <span class="ruby-identifier">inflate</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+                <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> } 
                 <span class="ruby-keyword kw">super</span>
                 <span class="ruby-identifier">output</span>
         <span class="ruby-keyword kw">end</span>
@@ -151,7 +177,7 @@ Finishes inflating and flushes the buffer
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000026"></a><b>inflate</b>(zstring)
+    <a name="M000034"></a><b>inflate</b>(zstring=nil)
   </div>
   <div class="description">
   <h2>Example</h2>
@@ -162,14 +188,14 @@ Finishes inflating and flushes the buffer
 </pre>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show source</a> ]</p>
-  <div id="M000026_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000034_source')" id="l_M000034_source">show source</a> ]</p>
+  <div id="M000034_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 152</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inflate</span> <span class="ruby-identifier">zstring</span>
-                
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 215</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inflate</span> <span class="ruby-identifier">zstring</span>=<span class="ruby-keyword kw">nil</span>
+                <span class="ruby-ivar">@zstring</span> = <span class="ruby-identifier">zstring</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">zstring</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-comment cmt">#We can't use unpack, IronRuby doesn't have it yet.</span>
-                <span class="ruby-identifier">zstring</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>}
+                <span class="ruby-ivar">@zstring</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>}
                 
                <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rawdeflate</span> <span class="ruby-keyword kw">then</span>
 
@@ -192,8 +218,12 @@ Finishes inflating and flushes the buffer
                 <span class="ruby-identifier">preset_dictionary_flag</span> = ((<span class="ruby-identifier">flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x20</span>) <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">0x05</span>) <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
                 <span class="ruby-identifier">compression_level</span> = (<span class="ruby-identifier">flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x</span><span class="ruby-constant">C0</span>) <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">0x06</span>
                 
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset_dictionary_flag</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@dict</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">NeedDict</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">&quot;Preset dictionary needed!&quot;</span> <span class="ruby-keyword kw">end</span>
+                
                 <span class="ruby-comment cmt">#TODO:  Add Preset dictionary support</span>
-                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset_dictionary_flag</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@in_pos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">4</span> <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset_dictionary_flag</span> <span class="ruby-keyword kw">then</span> 
+                        <span class="ruby-ivar">@dict_crc</span> = <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">24</span> <span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">16</span> <span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span> <span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>]
+                 <span class="ruby-keyword kw">end</span>
                 
                 <span class="ruby-keyword kw">end</span>
                 <span class="ruby-identifier">last_block</span> = <span class="ruby-keyword kw">false</span>
@@ -209,6 +239,28 @@ Finishes inflating and flushes the buffer
                         <span class="ruby-keyword kw">end</span>  
                 <span class="ruby-keyword kw">end</span>
                 <span class="ruby-identifier">finish</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000033"></a><b>set_dictionary</b>(string)
+  </div>
+  <div class="description">
+  <p>
+Sets the <a href="Inflate.html#M000034">inflate</a> dictionary
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000033_source')" id="l_M000033_source">show source</a> ]</p>
+  <div id="M000033_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 206</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_dictionary</span> <span class="ruby-identifier">string</span>
+                <span class="ruby-ivar">@dict</span> = <span class="ruby-identifier">string</span>
+                <span class="ruby-identifier">reset</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>

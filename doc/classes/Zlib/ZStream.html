@@ -80,24 +80,24 @@ Object
 
   <div class="sectiontitle">Methods</div>
   <ul>
-  <li><a href="#M000004">adler</a></li>
-  <li><a href="#M000005">avail_in</a></li>
-  <li><a href="#M000006">avail_out</a></li>
-  <li><a href="#M000007">avail_out=</a></li>
-  <li><a href="#M000008">close</a></li>
-  <li><a href="#M000009">closed?</a></li>
-  <li><a href="#M000010">data_type</a></li>
-  <li><a href="#M000011">end</a></li>
-  <li><a href="#M000012">ended?</a></li>
-  <li><a href="#M000013">finish</a></li>
-  <li><a href="#M000014">finished?</a></li>
-  <li><a href="#M000015">flush_next_in</a></li>
-  <li><a href="#M000016">flush_next_out</a></li>
-  <li><a href="#M000003">new</a></li>
-  <li><a href="#M000017">reset</a></li>
-  <li><a href="#M000018">stream_end?</a></li>
-  <li><a href="#M000019">total_in</a></li>
-  <li><a href="#M000020">total_out</a></li>
+  <li><a href="#M000007">adler</a></li>
+  <li><a href="#M000008">avail_in</a></li>
+  <li><a href="#M000009">avail_out</a></li>
+  <li><a href="#M000010">avail_out=</a></li>
+  <li><a href="#M000011">close</a></li>
+  <li><a href="#M000012">closed?</a></li>
+  <li><a href="#M000013">data_type</a></li>
+  <li><a href="#M000014">end</a></li>
+  <li><a href="#M000015">ended?</a></li>
+  <li><a href="#M000016">finish</a></li>
+  <li><a href="#M000017">finished?</a></li>
+  <li><a href="#M000018">flush_next_in</a></li>
+  <li><a href="#M000019">flush_next_out</a></li>
+  <li><a href="#M000006">new</a></li>
+  <li><a href="#M000020">reset</a></li>
+  <li><a href="#M000021">stream_end?</a></li>
+  <li><a href="#M000022">total_in</a></li>
+  <li><a href="#M000023">total_out</a></li>
   </ul>
 
 
@@ -108,13 +108,13 @@ Object
 <div class="sectiontitle">Public Class methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000003"></a><b>new</b>()
+    <a name="M000006"></a><b>new</b>()
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000003_source')" id="l_M000003_source">show source</a> ]</p>
-  <div id="M000003_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000006_source')" id="l_M000006_source">show source</a> ]</p>
+  <div id="M000006_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 16</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 54</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
                 <span class="ruby-ivar">@input_buffer</span> = []
                 <span class="ruby-ivar">@output_buffer</span> = []
@@ -131,19 +131,19 @@ Object
 <div class="sectiontitle">Public Instance methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000004"></a><b>adler</b>()
+    <a name="M000007"></a><b>adler</b>()
   </div>
   <div class="description">
   <p>
-Returns the <a href="ZStream.html#M000004">adler</a>-32 checksum of the
+Returns the <a href="ZStream.html#M000007">adler</a>-32 checksum of the
 input data.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000004_source')" id="l_M000004_source">show source</a> ]</p>
-  <div id="M000004_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000007_source')" id="l_M000007_source">show source</a> ]</p>
+  <div id="M000007_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 26</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 64</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">adler</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
@@ -152,7 +152,7 @@ input data.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000005"></a><b>avail_in</b>()
+    <a name="M000008"></a><b>avail_in</b>()
   </div>
   <div class="description">
   <p>
@@ -161,10 +161,10 @@ once.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000005_source')" id="l_M000005_source">show source</a> ]</p>
-  <div id="M000005_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000008_source')" id="l_M000008_source">show source</a> ]</p>
+  <div id="M000008_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 30</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 68</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">avail_in</span>
                 <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@in_pos</span>
         <span class="ruby-keyword kw">end</span>
@@ -174,7 +174,7 @@ once.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000006"></a><b>avail_out</b>()
+    <a name="M000009"></a><b>avail_out</b>()
   </div>
   <div class="description">
   <p>
@@ -183,10 +183,10 @@ self expanding this normally returns 0.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000006_source')" id="l_M000006_source">show source</a> ]</p>
-  <div id="M000006_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000009_source')" id="l_M000009_source">show source</a> ]</p>
+  <div id="M000009_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 35</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 73</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">avail_out</span>
                 <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@out_pos</span>
         <span class="ruby-keyword kw">end</span>
@@ -196,19 +196,19 @@ self expanding this normally returns 0.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000007"></a><b>avail_out=</b>(size)
+    <a name="M000010"></a><b>avail_out=</b>(size)
   </div>
   <div class="description">
   <p>
 Allocates size bytes in output buffer. If size &lt; <a
-href="ZStream.html#M000006">avail_out</a> it truncates the buffer.
+href="ZStream.html#M000009">avail_out</a> it truncates the buffer.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000007_source')" id="l_M000007_source">show source</a> ]</p>
-  <div id="M000007_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000010_source')" id="l_M000010_source">show source</a> ]</p>
+  <div id="M000010_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 40</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 78</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">avail_out=</span> <span class="ruby-identifier">size</span>
                 <span class="ruby-identifier">size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> 
                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">avail_out</span>
@@ -224,7 +224,7 @@ href="ZStream.html#M000006">avail_out</a> it truncates the buffer.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000008"></a><b>close</b>()
+    <a name="M000011"></a><b>close</b>()
   </div>
   <div class="description">
   <p>
@@ -232,10 +232,10 @@ Closes stream. Further operations will raise Zlib::StreamError
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000008_source')" id="l_M000008_source">show source</a> ]</p>
-  <div id="M000008_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000011_source')" id="l_M000011_source">show source</a> ]</p>
+  <div id="M000011_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 51</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 89</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
                 <span class="ruby-ivar">@closed</span> = <span class="ruby-keyword kw">true</span>
         <span class="ruby-keyword kw">end</span>
@@ -245,7 +245,7 @@ Closes stream. Further operations will raise Zlib::StreamError
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000009"></a><b>closed?</b>()
+    <a name="M000012"></a><b>closed?</b>()
   </div>
   <div class="description">
   <p>
@@ -253,10 +253,10 @@ True if stream closed, otherwise False.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000009_source')" id="l_M000009_source">show source</a> ]</p>
-  <div id="M000009_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000012_source')" id="l_M000012_source">show source</a> ]</p>
+  <div id="M000012_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 56</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 94</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">closed?</span>
                 <span class="ruby-ivar">@closed</span>
         <span class="ruby-keyword kw">end</span>
@@ -266,7 +266,7 @@ True if stream closed, otherwise False.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000010"></a><b>data_type</b>()
+    <a name="M000013"></a><b>data_type</b>()
   </div>
   <div class="description">
   <p>
@@ -275,10 +275,10 @@ Zlib::UNKNOWN
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000010_source')" id="l_M000010_source">show source</a> ]</p>
-  <div id="M000010_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000013_source')" id="l_M000013_source">show source</a> ]</p>
+  <div id="M000013_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 61</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 99</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">data_type</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
@@ -287,18 +287,18 @@ Zlib::UNKNOWN
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000011"></a><b>end</b>()
+    <a name="M000014"></a><b>end</b>()
   </div>
   <div class="description">
   <p>
-See <a href="ZStream.html#M000008">close</a>
+See <a href="ZStream.html#M000011">close</a>
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000011_source')" id="l_M000011_source">show source</a> ]</p>
-  <div id="M000011_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000014_source')" id="l_M000014_source">show source</a> ]</p>
+  <div id="M000014_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 65</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 103</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">end</span>
                 <span class="ruby-identifier">close</span>
         <span class="ruby-keyword kw">end</span>
@@ -308,18 +308,18 @@ See <a href="ZStream.html#M000008">close</a>
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000012"></a><b>ended?</b>()
+    <a name="M000015"></a><b>ended?</b>()
   </div>
   <div class="description">
   <p>
-See <a href="ZStream.html#M000009">closed?</a>
+See <a href="ZStream.html#M000012">closed?</a>
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000012_source')" id="l_M000012_source">show source</a> ]</p>
-  <div id="M000012_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000015_source')" id="l_M000015_source">show source</a> ]</p>
+  <div id="M000015_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 70</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 108</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ended?</span>
                 <span class="ruby-identifier">closed?</span>
         <span class="ruby-keyword kw">end</span>
@@ -329,7 +329,7 @@ See <a href="ZStream.html#M000009">closed?</a>
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000013"></a><b>finish</b>()
+    <a name="M000016"></a><b>finish</b>()
   </div>
   <div class="description">
   <p>
@@ -337,10 +337,10 @@ Finishes the stream, flushes output buffer, implemented by child classes
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000013_source')" id="l_M000013_source">show source</a> ]</p>
-  <div id="M000013_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000016_source')" id="l_M000016_source">show source</a> ]</p>
+  <div id="M000016_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 75</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 113</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>
                 <span class="ruby-identifier">close</span>
         <span class="ruby-keyword kw">end</span>
@@ -350,7 +350,7 @@ Finishes the stream, flushes output buffer, implemented by child classes
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000014"></a><b>finished?</b>()
+    <a name="M000017"></a><b>finished?</b>()
   </div>
   <div class="description">
   <p>
@@ -358,11 +358,16 @@ True if stream is finished, otherwise False
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000014_source')" id="l_M000014_source">show source</a> ]</p>
-  <div id="M000014_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000017_source')" id="l_M000017_source">show source</a> ]</p>
+  <div id="M000017_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 80</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 118</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finished?</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@finished</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+                        <span class="ruby-keyword kw">false</span>
+                <span class="ruby-keyword kw">else</span>
+                        <span class="ruby-ivar">@finished</span>
+                <span class="ruby-keyword kw">end</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
@@ -370,7 +375,7 @@ True if stream is finished, otherwise False
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000015"></a><b>flush_next_in</b>()
+    <a name="M000018"></a><b>flush_next_in</b>()
   </div>
   <div class="description">
   <p>
@@ -378,13 +383,16 @@ Flushes input buffer and returns the data therein.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000015_source')" id="l_M000015_source">show source</a> ]</p>
-  <div id="M000015_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000018_source')" id="l_M000018_source">show source</a> ]</p>
+  <div id="M000018_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 84</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 127</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_next_in</span>
                 <span class="ruby-ivar">@in_pos</span> = <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">length</span>
-                <span class="ruby-ivar">@input_buffer</span>
+                <span class="ruby-ivar">@finished</span> = <span class="ruby-keyword kw">true</span>
+                <span class="ruby-identifier">ret</span> = <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;c*&quot;</span>)
+                <span class="ruby-ivar">@input_buffer</span> = []
+                <span class="ruby-identifier">ret</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
@@ -392,7 +400,7 @@ Flushes input buffer and returns the data therein.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000016"></a><b>flush_next_out</b>()
+    <a name="M000019"></a><b>flush_next_out</b>()
   </div>
   <div class="description">
   <p>
@@ -400,13 +408,16 @@ Flushes the output buffer and returns all the data
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000016_source')" id="l_M000016_source">show source</a> ]</p>
-  <div id="M000016_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000019_source')" id="l_M000019_source">show source</a> ]</p>
+  <div id="M000019_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 90</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 136</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_next_out</span>
                 <span class="ruby-ivar">@out_pos</span> = <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">length</span>
-                <span class="ruby-ivar">@output_buffer</span>
+                <span class="ruby-ivar">@finished</span> = <span class="ruby-keyword kw">true</span>
+                <span class="ruby-identifier">ret</span> = <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;c*&quot;</span>)
+                <span class="ruby-ivar">@output_buffer</span> = []
+                <span class="ruby-identifier">ret</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
@@ -414,19 +425,19 @@ Flushes the output buffer and returns all the data
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000017"></a><b>reset</b>()
+    <a name="M000020"></a><b>reset</b>()
   </div>
   <div class="description">
   <p>
 Reset stream. Input and Output buffers are <a
-href="ZStream.html#M000017">reset</a>.
+href="ZStream.html#M000020">reset</a>.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000017_source')" id="l_M000017_source">show source</a> ]</p>
-  <div id="M000017_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000020_source')" id="l_M000020_source">show source</a> ]</p>
+  <div id="M000020_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 96</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 145</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset</span>
                 <span class="ruby-ivar">@out_pos</span> = <span class="ruby-value">-1</span>
                 <span class="ruby-ivar">@in_pos</span> = <span class="ruby-value">-1</span>
@@ -439,7 +450,7 @@ href="ZStream.html#M000017">reset</a>.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000018"></a><b>stream_end?</b>()
+    <a name="M000021"></a><b>stream_end?</b>()
   </div>
   <div class="description">
   <p>
@@ -447,10 +458,10 @@ See finished.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000018_source')" id="l_M000018_source">show source</a> ]</p>
-  <div id="M000018_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show source</a> ]</p>
+  <div id="M000021_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 104</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 153</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stream_end?</span>
                 <span class="ruby-identifier">finished?</span>
         <span class="ruby-keyword kw">end</span>
@@ -460,7 +471,7 @@ See finished.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000019"></a><b>total_in</b>()
+    <a name="M000022"></a><b>total_in</b>()
   </div>
   <div class="description">
   <p>
@@ -468,10 +479,10 @@ Size of input buffer.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000019_source')" id="l_M000019_source">show source</a> ]</p>
-  <div id="M000019_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show source</a> ]</p>
+  <div id="M000022_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 109</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 158</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">total_in</span>
                 <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">length</span>
         <span class="ruby-keyword kw">end</span>
@@ -481,7 +492,7 @@ Size of input buffer.
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000020"></a><b>total_out</b>()
+    <a name="M000023"></a><b>total_out</b>()
   </div>
   <div class="description">
   <p>
@@ -489,10 +500,10 @@ Size of output buffer.
 </p>
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000020_source')" id="l_M000020_source">show source</a> ]</p>
-  <div id="M000020_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show source</a> ]</p>
+  <div id="M000023_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 114</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 163</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">total_out</span>
                 <span class="ruby-ivar">@output_buffer</span>.<span class="ruby-identifier">length</span>
         <span class="ruby-keyword kw">end</span>

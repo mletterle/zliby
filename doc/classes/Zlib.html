@@ -72,12 +72,17 @@
 
 
 
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000001">adler32</a></li>
+  <li><a href="#M000003">crc32</a></li>
+  <li><a href="#M000002">crc_table</a></li>
+  </ul>
 
 
 
   <div class="sectiontitle">Classes and Modules</div>
-  Class <a href="Zlib/Fixnum.html" class="link">Zlib::Fixnum</a><br />
-Class <a href="Zlib/GzipFile.html" class="link">Zlib::GzipFile</a><br />
+  Class <a href="Zlib/GzipFile.html" class="link">Zlib::GzipFile</a><br />
 Class <a href="Zlib/GzipReader.html" class="link">Zlib::GzipReader</a><br />
 Class <a href="Zlib/Inflate.html" class="link">Zlib::Inflate</a><br />
 Class <a href="Zlib/ZStream.html" class="link">Zlib::ZStream</a><br />
@@ -88,7 +93,7 @@ Class <a href="Zlib/ZStream.html" class="link">Zlib::ZStream</a><br />
   <tr valign='top'>
     <td class="attr-name">ZLIBY_VERSION</td>
     <td>=</td>
-    <td class="attr-value">&quot;0.0.2&quot;</td>
+    <td class="attr-value">&quot;0.0.5&quot;</td>
   </tr>
   <tr valign='top'>
     <td class="attr-name">ZLIB_VERSION</td>
@@ -138,6 +143,79 @@ Class <a href="Zlib/ZStream.html" class="link">Zlib::ZStream</a><br />
   </table>
 
 
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000001"></a><b>adler32</b>(string=&quot;&quot;, adler=1)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000001_source')" id="l_M000001_source">show source</a> ]</p>
+  <div id="M000001_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 15</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">adler32</span> <span class="ruby-identifier">string</span>=<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">adler</span>=<span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">adler</span> <span class="ruby-operator">&gt;</span> (<span class="ruby-value">2</span><span class="ruby-operator">**</span><span class="ruby-value">128</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">RangeError</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">end</span> 
+        <span class="ruby-identifier">accum1</span> = <span class="ruby-identifier">adler</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xffff</span>
+        <span class="ruby-identifier">accum2</span> = (<span class="ruby-identifier">adler</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">16</span>) <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xffff</span>
+        
+        <span class="ruby-identifier">len</span> = <span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span>
+        <span class="ruby-identifier">x</span> = <span class="ruby-value">-1</span>
+        <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> 
+                <span class="ruby-identifier">tlen</span> = <span class="ruby-identifier">len</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">5552</span> <span class="ruby-operator">?</span> <span class="ruby-value">5552</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">len</span>
+                <span class="ruby-identifier">len</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">tlen</span>
+                <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">tlen</span> <span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+                        <span class="ruby-identifier">x</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+                        <span class="ruby-identifier">accum1</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">string</span>[<span class="ruby-identifier">x</span>]
+                        <span class="ruby-identifier">accum2</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">accum1</span>
+                        <span class="ruby-identifier">tlen</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">accum1</span> <span class="ruby-operator">%=</span> <span class="ruby-value">65521</span>
+                <span class="ruby-identifier">accum2</span> <span class="ruby-operator">%=</span> <span class="ruby-value">65521</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">accum2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">16</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">accum1</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000003"></a><b>crc32</b>(string=&quot;&quot;, crc=0)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000003_source')" id="l_M000003_source">show source</a> ]</p>
+  <div id="M000003_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 41</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">crc32</span> <span class="ruby-identifier">string</span>=<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">crc</span>=<span class="ruby-value">0</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">crc</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span><span class="ruby-operator">**</span><span class="ruby-value">128</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">RangeError</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">crc</span> = <span class="ruby-identifier">crc</span> <span class="ruby-operator">^</span> <span class="ruby-value">0xffffffff</span>
+        <span class="ruby-identifier">string</span>.<span class="ruby-identifier">each_byte</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">byte</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">index</span> = (<span class="ruby-identifier">crc</span> <span class="ruby-operator">^</span> <span class="ruby-identifier">byte</span>) <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xff</span>
+                <span class="ruby-identifier">crc</span> = (<span class="ruby-identifier">crc</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">8</span>) <span class="ruby-operator">^</span> <span class="ruby-identifier">crc_table</span>[<span class="ruby-identifier">index</span>] 
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">crc</span> <span class="ruby-operator">^</span> <span class="ruby-value">0xffffffff</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000002"></a><b>crc_table</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000002_source')" id="l_M000002_source">show source</a> ]</p>
+  <div id="M000002_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 37</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">crc_table</span>
+        [<span class="ruby-value">0</span>, <span class="ruby-value">1996959894</span>, <span class="ruby-value">3993919788</span>, <span class="ruby-value">2567524794</span>, <span class="ruby-value">124634137</span>, <span class="ruby-value">1886057615</span>, <span class="ruby-value">3915621685</span>, <span class="ruby-value">2657392035</span>, <span class="ruby-value">249268274</span>, <span class="ruby-value">2044508324</span>, <span class="ruby-value">3772115230</span>, <span class="ruby-value">2547177864</span>, <span class="ruby-value">162941995</span>, <span class="ruby-value">2125561021</span>, <span class="ruby-value">3887607047</span>, <span class="ruby-value">2428444049</span>, <span class="ruby-value">498536548</span>, <span class="ruby-value">1789927666</span>, <span class="ruby-value">4089016648</span>, <span class="ruby-value">2227061214</span>, <span class="ruby-value">450548861</span>, <span class="ruby-value">1843258603</span>, <span class="ruby-value">4107580753</span>, <span class="ruby-value">2211677639</span>, <span class="ruby-value">325883990</span>, <span class="ruby-value">1684777152</span>, <span class="ruby-value">4251122042</span>, <span class="ruby-value">2321926636</span>, <span class="ruby-value">335633487</span>, <span class="ruby-value">1661365465</span>, <span class="ruby-value">4195302755</span>, <span class="ruby-value">2366115317</span>, <span class="ruby-value">997073096</span>, <span class="ruby-value">1281953886</span>, <span class="ruby-value">3579855332</span>, <span class="ruby-value">2724688242</span>, <span class="ruby-value">1006888145</span>, <span class="ruby-value">1258607687</span>, <span class="ruby-value">3524101629</span>, <span class="ruby-value">2768942443</span>, <span class="ruby-value">901097722</span>, <span class="ruby-value">1119000684</span>, <span class="ruby-value">3686517206</span>, <span class="ruby-value">2898065728</span>, <span class="ruby-value">853044451</span>, <span class="ruby-value">1172266101</span>, <span class="ruby-value">3705015759</span>, <span class="ruby-value">2882616665</span>, <span class="ruby-value">651767980</span>, <span class="ruby-value">1373503546</span>, <span class="ruby-value">3369554304</span>, <span class="ruby-value">3218104598</span>, <span class="ruby-value">565507253</span>, <span class="ruby-value">1454621731</span>, <span class="ruby-value">3485111705</span>, <span class="ruby-value">3099436303</span>, <span class="ruby-value">671266974</span>, <span class="ruby-value">1594198024</span>, <span class="ruby-value">3322730930</span>, <span class="ruby-value">2970347812</span>, <span class="ruby-value">795835527</span>, <span class="ruby-value">1483230225</span>, <span class="ruby-value">3244367275</span>, <span class="ruby-value">3060149565</span>, <span class="ruby-value">1994146192</span>, <span class="ruby-value">31158534</span>, <span class="ruby-value">2563907772</span>, <span class="ruby-value">4023717930</span>, <span class="ruby-value">1907459465</span>, <span class="ruby-value">112637215</span>, <span class="ruby-value">2680153253</span>, <span class="ruby-value">3904427059</span>, <span class="ruby-value">2013776290</span>, <span class="ruby-value">251722036</span>, <span class="ruby-value">2517215374</span>, <span class="ruby-value">3775830040</span>, <span class="ruby-value">2137656763</span>, <span class="ruby-value">141376813</span>, <span class="ruby-value">2439277719</span>, <span class="ruby-value">3865271297</span>, <span class="ruby-value">1802195444</span>, <span class="ruby-value">476864866</span>, <span class="ruby-value">2238001368</span>, <span class="ruby-value">4066508878</span>, <span class="ruby-value">1812370925</span>, <span class="ruby-value">453092731</span>, <span class="ruby-value">2181625025</span>, <span class="ruby-value">4111451223</span>, <span class="ruby-value">1706088902</span>, <span class="ruby-value">314042704</span>, <span class="ruby-value">2344532202</span>, <span class="ruby-value">4240017532</span>, <span class="ruby-value">1658658271</span>, <span class="ruby-value">366619977</span>, <span class="ruby-value">2362670323</span>, <span class="ruby-value">4224994405</span>, <span class="ruby-value">1303535960</span>, <span class="ruby-value">984961486</span>, <span class="ruby-value">2747007092</span>, <span class="ruby-value">3569037538</span>, <span class="ruby-value">1256170817</span>, <span class="ruby-value">1037604311</span>, <span class="ruby-value">2765210733</span>, <span class="ruby-value">3554079995</span>, <span class="ruby-value">1131014506</span>, <span class="ruby-value">879679996</span>, <span class="ruby-value">2909243462</span>, <span class="ruby-value">3663771856</span>, <span class="ruby-value">1141124467</span>, <span class="ruby-value">855842277</span>, <span class="ruby-value">2852801631</span>, <span class="ruby-value">3708648649</span>, <span class="ruby-value">1342533948</span>, <span class="ruby-value">654459306</span>, <span class="ruby-value">3188396048</span>, <span class="ruby-value">3373015174</span>, <span class="ruby-value">1466479909</span>, <span class="ruby-value">544179635</span>, <span class="ruby-value">3110523913</span>, <span class="ruby-value">3462522015</span>, <span class="ruby-value">1591671054</span>, <span class="ruby-value">702138776</span>, <span class="ruby-value">2966460450</span>, <span class="ruby-value">3352799412</span>, <span class="ruby-value">1504918807</span>, <span class="ruby-value">783551873</span>, <span class="ruby-value">3082640443</span>, <span class="ruby-value">3233442989</span>, <span class="ruby-value">3988292384</span>, <span class="ruby-value">2596254646</span>, <span class="ruby-value">62317068</span>, <span class="ruby-value">1957810842</span>, <span class="ruby-value">3939845945</span>, <span class="ruby-value">2647816111</span>, <span class="ruby-value">81470997</span>, <span class="ruby-value">1943803523</span>, <span class="ruby-value">3814918930</span>, <span class="ruby-value">2489596804</span>, <span class="ruby-value">225274430</span>, <span class="ruby-value">2053790376</span>, <span class="ruby-value">3826175755</span>, <span class="ruby-value">2466906013</span>, <span class="ruby-value">167816743</span>, <span class="ruby-value">2097651377</span>, <span class="ruby-value">4027552580</span>, <span class="ruby-value">2265490386</span>, <span class="ruby-value">503444072</span>, <span class="ruby-value">1762050814</span>, <span class="ruby-value">4150417245</span>, <span class="ruby-value">2154129355</span>, <span class="ruby-value">426522225</span>, <span class="ruby-value">1852507879</span>, <span class="ruby-value">4275313526</span>, <span class="ruby-value">2312317920</span>, <span class="ruby-value">282753626</span>, <span class="ruby-value">1742555852</span>, <span class="ruby-value">4189708143</span>, <span class="ruby-value">2394877945</span>, <span class="ruby-value">397917763</span>, <span class="ruby-value">1622183637</span>, <span class="ruby-value">3604390888</span>, <span class="ruby-value">2714866558</span>, <span class="ruby-value">953729732</span>, <span class="ruby-value">1340076626</span>, <span class="ruby-value">3518719985</span>, <span class="ruby-value">2797360999</span>, <span class="ruby-value">1068828381</span>, <span class="ruby-value">1219638859</span>, <span class="ruby-value">3624741850</span>, <span class="ruby-value">2936675148</span>, <span class="ruby-value">906185462</span>, <span class="ruby-value">1090812512</span>, <span class="ruby-value">3747672003</span>, <span class="ruby-value">2825379669</span>, <span class="ruby-value">829329135</span>, <span class="ruby-value">1181335161</span>, <span class="ruby-value">3412177804</span>, <span class="ruby-value">3160834842</span>, <span class="ruby-value">628085408</span>, <span class="ruby-value">1382605366</span>, <span class="ruby-value">3423369109</span>, <span class="ruby-value">3138078467</span>, <span class="ruby-value">570562233</span>, <span class="ruby-value">1426400815</span>, <span class="ruby-value">3317316542</span>, <span class="ruby-value">2998733608</span>, <span class="ruby-value">733239954</span>, <span class="ruby-value">1555261956</span>, <span class="ruby-value">3268935591</span>, <span class="ruby-value">3050360625</span>, <span class="ruby-value">752459403</span>, <span class="ruby-value">1541320221</span>, <span class="ruby-value">2607071920</span>, <span class="ruby-value">3965973030</span>, <span class="ruby-value">1969922972</span>, <span class="ruby-value">40735498</span>, <span class="ruby-value">2617837225</span>, <span class="ruby-value">3943577151</span>, <span class="ruby-value">1913087877</span>, <span class="ruby-value">83908371</span>, <span class="ruby-value">2512341634</span>, <span class="ruby-value">3803740692</span>, <span class="ruby-value">2075208622</span>, <span class="ruby-value">213261112</span>, <span class="ruby-value">2463272603</span>, <span class="ruby-value">3855990285</span>, <span class="ruby-value">2094854071</span>, <span class="ruby-value">198958881</span>, <span class="ruby-value">2262029012</span>, <span class="ruby-value">4057260610</span>, <span class="ruby-value">1759359992</span>, <span class="ruby-value">534414190</span>, <span class="ruby-value">2176718541</span>, <span class="ruby-value">4139329115</span>, <span class="ruby-value">1873836001</span>, <span class="ruby-value">414664567</span>, <span class="ruby-value">2282248934</span>, <span class="ruby-value">4279200368</span>, <span class="ruby-value">1711684554</span>, <span class="ruby-value">285281116</span>, <span class="ruby-value">2405801727</span>, <span class="ruby-value">4167216745</span>, <span class="ruby-value">1634467795</span>, <span class="ruby-value">376229701</span>, <span class="ruby-value">2685067896</span>, <span class="ruby-value">3608007406</span>, <span class="ruby-value">1308918612</span>, <span class="ruby-value">956543938</span>, <span class="ruby-value">2808555105</span>, <span class="ruby-value">3495958263</span>, <span class="ruby-value">1231636301</span>, <span class="ruby-value">1047427035</span>, <span class="ruby-value">2932959818</span>, <span class="ruby-value">3654703836</span>, <span class="ruby-value">1088359270</span>, <span class="ruby-value">936918000</span>, <span class="ruby-value">2847714899</span>, <span class="ruby-value">3736837829</span>, <span class="ruby-value">1202900863</span>, <span class="ruby-value">817233897</span>, <span class="ruby-value">3183342108</span>, <span class="ruby-value">3401237130</span>, <span class="ruby-value">1404277552</span>, <span class="ruby-value">615818150</span>, <span class="ruby-value">3134207493</span>, <span class="ruby-value">3453421203</span>, <span class="ruby-value">1423857449</span>, <span class="ruby-value">601450431</span>, <span class="ruby-value">3009837614</span>, <span class="ruby-value">3294710456</span>, <span class="ruby-value">1567103746</span>, <span class="ruby-value">711928724</span>, <span class="ruby-value">3020668471</span>, <span class="ruby-value">3272380065</span>, <span class="ruby-value">1510334235</span>, <span class="ruby-value">755167117</span>]
+<span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
 </div>
 
   </div>

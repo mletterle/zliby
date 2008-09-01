@@ -82,10 +82,13 @@ GzipFile
 
   <div class="sectiontitle">Methods</div>
   <ul>
-  <li><a href="#M000023">close</a></li>
-  <li><a href="#M000021">new</a></li>
-  <li><a href="#M000024">open</a></li>
-  <li><a href="#M000022">read</a></li>
+  <li><a href="#M000027">eof?</a></li>
+  <li><a href="#M000025">isbitset?</a></li>
+  <li><a href="#M000024">new</a></li>
+  <li><a href="#M000030">open</a></li>
+  <li><a href="#M000028">pos</a></li>
+  <li><a href="#M000026">read</a></li>
+  <li><a href="#M000029">rewind</a></li>
   </ul>
 
 
@@ -109,14 +112,22 @@ Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict
 <div class="sectiontitle">Public Class methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000021"></a><b>new</b>(io)
+    <a name="M000024"></a><b>new</b>(io)
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show source</a> ]</p>
-  <div id="M000021_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
+  <div id="M000024_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 458</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 525</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">io</span>
+                
+                <span class="ruby-comment cmt">#Add a helper method to check bits</span>
+                <span class="ruby-operator">::</span><span class="ruby-constant">Fixnum</span>.<span class="ruby-identifier">module_eval</span> <span class="ruby-keyword kw">do</span>
+                        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">isbitset?</span> <span class="ruby-identifier">bit_to_check</span>
+                        <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&amp;</span> (<span class="ruby-value">2</span> <span class="ruby-operator">**</span> <span class="ruby-identifier">bit_to_check</span>)  <span class="ruby-operator">==</span> (<span class="ruby-value">2</span> <span class="ruby-operator">**</span> <span class="ruby-identifier">bit_to_check</span>) <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+
                 <span class="ruby-keyword kw">super</span>()
                 <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">io</span>
                 <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@input_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>}
@@ -157,6 +168,10 @@ Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict
                 <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@in_pos</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@input_buffer</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
                         <span class="ruby-ivar">@contents</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@input_buffer</span>[<span class="ruby-ivar">@in_pos</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>])
                 <span class="ruby-keyword kw">end</span>
+
+                <span class="ruby-comment cmt">#we do raw deflate, no headers</span>
+                <span class="ruby-ivar">@zstream</span> = <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflate</span>.<span class="ruby-identifier">new</span> <span class="ruby-operator">-</span><span class="ruby-constant">MAX_WBITS</span>
+                <span class="ruby-ivar">@inflated</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@zstream</span>.<span class="ruby-identifier">inflate</span> <span class="ruby-ivar">@contents</span>)
                  
         <span class="ruby-keyword kw">end</span>
 </pre>
@@ -165,13 +180,13 @@ Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000024"></a><b>open</b>(filename) {|gz else gz end| ...}
+    <a name="M000030"></a><b>open</b>(filename) {|gz else gz end| ...}
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
-  <div id="M000024_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000030_source')" id="l_M000030_source">show source</a> ]</p>
+  <div id="M000030_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 513</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 600</span>
                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>
                         <span class="ruby-identifier">io</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>
                         <span class="ruby-identifier">gz</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">io</span>
@@ -186,14 +201,15 @@ Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict
 <div class="sectiontitle">Public Instance methods</div>
 <div class="method">
   <div class="title">
-    <a name="M000023"></a><b>close</b>()
+    <a name="M000027"></a><b>eof?</b>()
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show source</a> ]</p>
-  <div id="M000023_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000027_source')" id="l_M000027_source">show source</a> ]</p>
+  <div id="M000027_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 508</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 585</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eof?</span>
+                <span class="ruby-ivar">@inflated</span>.<span class="ruby-identifier">eof?</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
@@ -201,17 +217,64 @@ Class <a href="GzipReader/NeedDict.html" class="link">Zlib::GzipReader::NeedDict
 </div>
 <div class="method">
   <div class="title">
-    <a name="M000022"></a><b>read</b>()
+    <a name="M000025"></a><b>isbitset?</b>(bit_to_check)
   </div>
 <div class="sourcecode">
-  <p class="source-link">[ <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show source</a> ]</p>
-  <div id="M000022_source" class="dyn-source">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
+  <div id="M000025_source" class="dyn-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/zliby.rb, line 502</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
-                <span class="ruby-comment cmt">#we do raw deflate, no headers</span>
-                <span class="ruby-identifier">z</span> = <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflate</span>.<span class="ruby-identifier">new</span> <span class="ruby-operator">-</span><span class="ruby-constant">MAX_WBITS</span>
-                <span class="ruby-identifier">z</span>.<span class="ruby-identifier">inflate</span> <span class="ruby-ivar">@contents</span>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 529</span>
+                        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">isbitset?</span> <span class="ruby-identifier">bit_to_check</span>
+                        <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&amp;</span> (<span class="ruby-value">2</span> <span class="ruby-operator">**</span> <span class="ruby-identifier">bit_to_check</span>)  <span class="ruby-operator">==</span> (<span class="ruby-value">2</span> <span class="ruby-operator">**</span> <span class="ruby-identifier">bit_to_check</span>) <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000028"></a><b>pos</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000028_source')" id="l_M000028_source">show source</a> ]</p>
+  <div id="M000028_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 589</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pos</span>
+                <span class="ruby-ivar">@inflated</span>.<span class="ruby-identifier">pos</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000026"></a><b>read</b>(length=nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show source</a> ]</p>
+  <div id="M000026_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 581</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span> <span class="ruby-identifier">length</span>=<span class="ruby-keyword kw">nil</span>
+                <span class="ruby-ivar">@inflated</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">length</span>
+        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000029"></a><b>rewind</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000029_source')" id="l_M000029_source">show source</a> ]</p>
+  <div id="M000029_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/zliby.rb, line 593</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewind</span>
+                <span class="ruby-ivar">@inflated</span>.<span class="ruby-identifier">rewind</span>
+                <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">seek</span> <span class="ruby-value">0</span>, <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-constant">SEEK_SET</span>
         <span class="ruby-keyword kw">end</span>
 </pre>
   </div>
