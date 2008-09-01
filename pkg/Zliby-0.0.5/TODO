@@ -1,0 +1,6 @@
+==Zliby[http://zliby.rubyforge.org]  TODOs
+
+*  Finish implementing Ruby-core Zlib API
+*  Add tar support
+*  Add bzip2 support
+*  Add PKZIP support
