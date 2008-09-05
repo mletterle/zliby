@@ -4,7 +4,7 @@ require 'rake/gempackagetask'
 
 
 gem_spec = Gem::Specification.new do |gem|
-			gem.name = "Zliby"
+			gem.name = "zliby"
 			gem.version = "0.0.5"
 			gem.author = "Michael Letterle"
 			gem.email = "theprokrammer@prokrams.com"
