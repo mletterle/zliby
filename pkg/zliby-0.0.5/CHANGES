@@ -1,0 +1,5 @@
+==Version History
+===0.0.2
+*  Gzip decompression added (NOTE: Does not currently do CRC checking, nor multiple file gzips)
+===0.0.1
+*  Initial Version, only supports Zlib deflate
