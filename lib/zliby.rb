@@ -487,12 +487,21 @@ end
 
 end
 
-#== DEFLATE Comprssion
+NO_COMPRESSION = 0
+BEST_SPEED = 1
+BEST_COMPRESSION = 9
+DEFAULT_COMPRESSION = 1
+NO_FLUSH = 0
+SYNC_FLUSH = 2
+FULL_FLUSH = 3
+FINISH = 4
+
+#== DEFLATE Compression
 #Implements compression of an arbritrary byte string into a RFC-1951[ftp://ftp.rfc-editor.org/in-notes/rfc1951.txt] compatible stream.
 class Deflate < ZStream
 	
 	#Compresses the given string. Valid values of level are Zlib::NO_COMPRESSION, Zlib::BEST_SPEED, Zlib::BEST_COMPRESSION, Zlib::DEFAULT_COMPRESSION, and an integer from 0 to 9. 
-	def self.deflate(string, leve)
+	def self.deflate(string, level)
 	end
 	
 	def <<(string)
