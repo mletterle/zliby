@@ -487,6 +487,37 @@ end
 
 end
 
+#== DEFLATE Comprssion
+#Implements compression of an arbritrary byte string into a RFC-1951[ftp://ftp.rfc-editor.org/in-notes/rfc1951.txt] compatible stream.
+class Deflate < ZStream
+	
+	#Compresses the given string. Valid values of level are Zlib::NO_COMPRESSION, Zlib::BEST_SPEED, Zlib::BEST_COMPRESSION, Zlib::DEFAULT_COMPRESSION, and an integer from 0 to 9. 
+	def self.deflate(string, leve)
+	end
+	
+	def <<(string)
+	end
+	
+	#Inputs string into the deflate stream and returns the output from the stream. On calling this method, both the input and the output buffers of the stream are flushed. If string is nil, this method finishes the stream, just like Zlib::ZStream#finish. The value of flush should be either Zlib::NO_FLUSH, Zlib::SYNC_FLUSH, Zlib::FULL_FLUSH, or Zlib::FINISH.
+	def deflate(string, level)
+	end
+	
+	def flush(flush)
+	end
+	
+	def initialize_copy
+	end
+	
+	def initialize(level, windowBits, memlevel, strategy)
+	end
+	
+	def params(level, strategy)
+	end
+	
+	def set_dictionary(string)
+	end
+	
+end
 
 class GzipFile
 	
